@@ -1,4 +1,5 @@
 transformers
 flask
 accelerate
-bitesandbytes
+bitsandbytes
+scipy

@@ -1,14 +1,13 @@
 from transformers import AutoModelForCausalLM, AutoTokenizer
 from flask import Flask, request, Response
-import json
+import json, torch
 
-print("Cargando modelo...")
+print("Loading model...")
 model_name = "HuggingFaceH4/starchat-alpha"
 tokenizer = AutoTokenizer.from_pretrained(model_name)
 # If you choose not to download the model into the local directory, replace "./model/" with the name of the model (model_name)
 model_8bit = AutoModelForCausalLM.from_pretrained("./model/", device_map="auto", load_in_8bit=True)
-
-print("Modelo cargado")
+print("Model loaded.")
 
 app = Flask(__name__)
 
@@ -35,7 +34,7 @@ def predict():
         data = request.get_json()
         prompt = data['inputs']
         params = data['parameters']
-        inputs = tokenizer.encode(prompt, return_tensors="pt").to(1)
+        inputs = tokenizer.encode(prompt, return_tensors="pt").to(0)
         filtered_params = {key: value for key,
                            value in params.items() if key in parameter_names}
         outputs = model_8bit.generate(
