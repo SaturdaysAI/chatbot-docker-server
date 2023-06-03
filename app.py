@@ -6,7 +6,7 @@ print("Loading model...")
 model_name = "HuggingFaceH4/starchat-alpha"
 tokenizer = AutoTokenizer.from_pretrained(model_name)
 # If you choose not to download the model into the local directory, replace "./model/" with the name of the model (model_name)
-model_8bit = AutoModelForCausalLM.from_pretrained("./model/", device_map="auto", load_in_8bit=True)
+model_8bit = AutoModelForCausalLM.from_pretrained("./model", device_map="auto", load_in_8bit=True, torch_dtype=torch.float16)
 print("Model loaded.")
 
 app = Flask(__name__)
