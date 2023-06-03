@@ -11,4 +11,6 @@ RUN pip3 install torch torchvision torchaudio --index-url https://download.pytor
 
 COPY app.py app.py
 
+EXPOSE 5000
+
 CMD ["python3", "-m", "flask", "run", "--host=0.0.0.0", "--port=5000"]
