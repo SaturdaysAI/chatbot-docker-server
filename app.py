@@ -2,11 +2,16 @@ from transformers import AutoModelForCausalLM, AutoTokenizer
 from flask import Flask, request, Response
 import json
 
+print("Loading tokenizer...")
+model = "/model"
+tokenizer = AutoTokenizer.from_pretrained(model)
+print("Tokenizer loaded.")
 print("Loading model...")
-model_name = "HuggingFaceH4/starchat-alpha"
-tokenizer = AutoTokenizer.from_pretrained(model_name)
-# If you choose not to download the model into the local directory, replace "./model/" with the name of the model (model_name)
-model_8bit = AutoModelForCausalLM.from_pretrained("./model", device_map="auto")
+try:
+    model_8bit = AutoModelForCausalLM.from_pretrained(model, device_map="auto")
+except Exception as e:
+    print(e)
+    raise
 print("Model loaded.")
 
 app = Flask(__name__)
@@ -27,6 +32,7 @@ headers = {
     "Cache-Control": "no-cache",
     "Connection": "keep-alive",
 }
+
 
 @ app.route('/predict', methods=['POST'])
 def predict():
