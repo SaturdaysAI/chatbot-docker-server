@@ -1,6 +1,5 @@
 from transformers import AutoModelForCausalLM, AutoTokenizer
-from flask import Flask, request, Response
-import json
+from flask import Flask, request, jsonify
 
 print("Loading tokenizer...")
 model = "/model"
@@ -46,10 +45,10 @@ def predict():
         outputs = model_8bit.generate(
             inputs, **filtered_params, pad_token_id=tokenizer.eos_token_id)
         result = tokenizer.decode(outputs[0])
-        return {'result': result}
+        return jsonify({'result': result})
     except Exception as e:
         print(e)
-        return {'result': "Se ha producido un error. Vuelve a intentarlo."}
+        return jsonify({'result': "Se ha producido un error. Vuelve a intentarlo."})
 
 
 if __name__ == '__main__':

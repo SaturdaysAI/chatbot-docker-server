@@ -59,7 +59,7 @@ The output should be something like this:
 Now we can run the image in a container with the following command:
 
 ```bash
-docker run -d --gpus all --mount type=bind,src=/home/ubuntu/chatbot-docker-server/model,dst=/model chatbot-docker:latest
+docker run -d -p 5000:5000/tcp --gpus all --mount type=bind,src=/home/ubuntu/chatbot-docker-server/model,dst=/model chatbot-docker:latest
 ```
 
 The `docker run -d --gpus all --mount type=bind,src=/home/ubuntu/chatbot-docker-server/model,dst=/model chatbot-docker:latest` command runs a Docker container in detached mode (`-d`), enabling access to all GPUs (`--gpus all`), and binds the "model" directory from your local machine to the "/model" directory inside the Docker container (`--mount type=bind,src=...dst=...`).
